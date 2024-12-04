@@ -2,9 +2,54 @@
 <html>
     <head>
         <title>Nue</title>
-        <link rel="stylesheet" href="styles.css"/>
+
+        <style>
+            h1 {
+                color: blue;
+            }
+        </style>
     </head>
+
     <body>
-        <h1>hello world</h1>
+        <template id="greeting-message">
+            <style>
+                h1 {
+                    color: orange;
+                }
+            </style>
+
+            <h1>Hello, <slot name="persons-name"></slot>!</h1>
+        </template>
+
+        <fun-greeting>
+            <span slot="persons-name">Jayden</span>
+        </fun-greeting>
+        <fun-greeting>
+            <span slot="persons-name">Jaxen</span>
+        </fun-greeting>
+        <fun-greeting>
+            <span slot="persons-name">Jack</span>
+        </fun-greeting>
+        <fun-greeting>
+            <span slot="persons-name">Brody</span>
+        </fun-greeting>
+        <fun-greeting>
+            <span slot="persons-name">Brody</span>
+        </fun-greeting>
+        <script>
+            customElements.define(
+                "fun-greeting",
+                class extends HTMLElement {
+                    constructor() {
+                        super();
+                        let template = document.getElementById("greeting-message");
+                        let templateContent = template.content;
+    
+                        const shadowRoot = this.attachShadow({ mode: "open" });
+                        shadowRoot.appendChild(templateContent.cloneNode(true));
+                    }
+                },
+            );
+        </script>
     </body>
 </html>
